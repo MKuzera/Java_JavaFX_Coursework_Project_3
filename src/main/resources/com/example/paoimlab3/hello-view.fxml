@@ -1,16 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.paoimlab3.HelloController">
-  <padding>
-    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-  </padding>
+<VBox alignment="CENTER" prefHeight="507.0" prefWidth="508.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.paoimlab3.HelloController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+    <children>
+        <AnchorPane prefHeight="600.0" prefWidth="500.0">
+            <children>
+                <TextFlow fx:id="textFlowTeacherList" layoutX="245.0" layoutY="15.0" prefHeight="27.0" prefWidth="83.0" />
+                <ListView fx:id="TeacherList" layoutX="245.0" layoutY="50.0" prefHeight="200.0" prefWidth="200.0" />
 
-  <Label fx:id="welcomeText"/>
-  <Button text="Hello!" onAction="#onHelloButtonClick"/>
+                <TextFlow fx:id="textFlowClassList" layoutX="20.0" layoutY="15.0" prefHeight="27.0" prefWidth="83.0" />
+                <ListView fx:id="ClassList" layoutX="20.0" layoutY="50.0" prefHeight="200.0" prefWidth="200.0" />
+
+
+                <TextFlow fx:id="textFlow1" layoutX="20.0" layoutY="280.0" prefHeight="27.0" prefWidth="83.0" />
+                <TextField fx:id="textField1" layoutX="130.0" layoutY="280.0" prefWidth="97.0" />
+
+                <TextFlow fx:id="textFlow2" layoutX="20.0" layoutY="320.0" prefHeight="27.0" prefWidth="83.0" />
+                <TextField fx:id="textField2" layoutX="130.0" layoutY="320.0" prefWidth="97.0" />
+
+                <TextFlow fx:id="textFlow3" layoutX="20.0" layoutY="360.0" prefHeight="27.0" prefWidth="83.0" />
+                <TextField fx:id="textField3" layoutX="130.0" layoutY="360.0" prefWidth="97.0" />
+
+                <TextFlow fx:id="textFlow4" layoutX="20.0" layoutY="400.0" prefHeight="27.0" prefWidth="130.0" />
+                <TextField fx:id="textField4" layoutX="130.0" layoutY="400.0" prefWidth="97.0" />
+
+                <TextFlow fx:id="textFlow5" layoutX="20.0" layoutY="440.0" prefHeight="27.0" prefWidth="130.0" />
+                <ListView fx:id="conditionList" layoutX="130.0" layoutY="440.0" prefHeight="100.0" prefWidth="83.0" />
+
+                <TextFlow fx:id="textFlowKomunikat" layoutX="20.0" layoutY="580.0" prefHeight="27.0" prefWidth="130.0" />
+
+                <Button fx:id="addButton" layoutX="20.0" layoutY="550.0" onAction="#handleButtonClickAdd" text="Add" prefWidth="60.0"/>
+
+                <Button fx:id="removeButton" layoutX="100.0" layoutY="550.0" onAction="#handleButtonClickRemove" text="Remove" prefWidth="60.0" />
+
+                <Button fx:id="editButton" layoutX="180.0" layoutY="550.0" onAction="#handleButtonClickEdit" text="Edit" prefWidth="60.0"/>
+
+                <TextFlow fx:id="textFlowClassInput" layoutX="245.0" layoutY="280.0" prefHeight="27.0" prefWidth="83.0" />
+                <TextField fx:id="textFieldClassInput" layoutX="355.0" layoutY="280.0" prefWidth="97.0" />
+
+                <TextFlow fx:id="textFlowClassMAX" layoutX="245.0" layoutY="320.0" prefHeight="27.0" prefWidth="83.0" />
+                <TextField fx:id="textFieldClassMAX" layoutX="355.0" layoutY="320.0" prefWidth="97.0" />
+
+                <Button fx:id="addButtonClass" layoutX="245.0" layoutY="360.0" onAction="#handleButtonClickAddClass" text="Add" prefWidth="60.0"/>
+
+                <Button fx:id="removeButtonClass" layoutX="325.0" layoutY="360.0" onAction="#handleButtonClickRemoveClass" text="Remove selected" prefWidth="129.0" />
+
+            </children>
+        </AnchorPane>
+    </children>
 </VBox>
