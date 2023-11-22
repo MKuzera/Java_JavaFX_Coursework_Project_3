@@ -13,22 +13,34 @@ import javafx.scene.control.Label;
 
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class HelloController {
+
+
+    @FXML
+    private TextFlow textFlowtextfilter;
+    @FXML
+    private TextField textFieldtextfilter;
+
+
+
     @FXML
     private TextFlow textFlowClassInput;
     @FXML
     private TextField textFieldClassInput;
+    @FXML
+    private TextFlow textFlowPercent;
+
 
     @FXML
     private TextFlow textFlowClassMAX;
@@ -64,27 +76,39 @@ public class HelloController {
     private ListView<String> ClassList;
     @FXML
     private ListView<String> conditionList;
-    @FXML
-    private TextFlow textFlowTeacherList;
-    @FXML
-    private TextFlow textFlowClassList;
+
     @FXML
     private TextFlow textFlowKomunikat;
+
+
     private Teacher selectedTeacher;
 
     ClassContainer classContainer;
 
+    @FXML
+    private ListView<String> sortTeacherList;
+
+    @FXML
+    private ListView<String> sortClassList;
 
     public void initialize() {
 
-        textFlowClassList.getChildren().clear();
-        textFlowClassList.getChildren().add(new Text("List of classes"));
+        textFlowtextfilter.getChildren().clear();
+        textFlowtextfilter.getChildren().add(new Text("Find"));
+        textFieldtextfilter.clear();
 
-        textFlowTeacherList.getChildren().clear();
-        textFlowTeacherList.getChildren().add(new Text("List of teachers"));
+        textFieldtextfilter.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode().toString().equals("ENTER") && textFieldtextfilter.isFocused()) {
+                handleEnterKeyPress(textFieldtextfilter.getText());
+                event.consume();
+            }
+        });
 
         textFlow1.getChildren().clear();
         textField1.setText("Name");
+
+        textFlowPercent.getChildren().clear();
+        textFlowPercent.getChildren().add(new Text("Class full: "));
 
         textFlow1.getChildren().clear();
         textFlow1.getChildren().add(new Text("First Name"));
@@ -119,8 +143,16 @@ public class HelloController {
         ObservableList<String> items = TeacherCondition.convertEnumToObservableList();
         conditionList.setItems(items);
 
-        initStartClassesAndTeachers();
+        List<String> sortByList = Arrays.asList("First Name", "Last Name", "Salary", "Condition");
+        ObservableList<String> sortBy = FXCollections.observableArrayList(sortByList);
+        sortTeacherList.setItems(sortBy);
 
+        List<String> sortByListClass = Arrays.asList("Name", "Percent");
+        ObservableList<String> sortByClass = FXCollections.observableArrayList(sortByListClass);
+        sortClassList.setItems(sortByClass);
+
+
+        initStartClassesAndTeachers();
         ClassList.setItems(getClassConteinersToDisplay());
 
 
@@ -130,6 +162,15 @@ public class HelloController {
                 System.out.println("Zaznaczono klasę: " + selectedClass);
                 TeacherList.setItems(getTeachersToDisplay(selectedClass));
                 selectedTeacher =null;
+
+                String percentValue = classContainer.getContainer().get(selectedClass.toString()).getPercentFull().toString();
+                System.out.println(percentValue);
+
+                StringBuilder str = new StringBuilder();
+                str.append("Class full: ").append(percentValue.toString().substring(0,Math.min(percentValue.toString().length(),4))).append("%");
+                Text textNode = new Text(str.toString());
+                textFlowPercent.getChildren().clear();
+                textFlowPercent.getChildren().add(textNode);
             }
         });
 
@@ -159,14 +200,34 @@ public class HelloController {
 
 
 
+
+
+
+    }
+
+    private void handleEnterKeyPress(String text) {
+        if(ClassList.getSelectionModel().getSelectedItem().isEmpty()){
+            textFlowKomunikat.getChildren().clear();
+            textFlowKomunikat.getChildren().add(new Text("No class selected"));
+        }
+
+        List<Teacher> teachers = classContainer.getContainer().get(ClassList.getSelectionModel().getSelectedItem().toString()).searchPartial(text);
+        ObservableList<String> keyList = FXCollections.observableArrayList();
+
+        for (Teacher t: teachers) {
+            keyList.add(t.getFirstName() + " " + t.getLastName());
+        }
+        TeacherList.setItems(keyList);
+
+
     }
 
     private ObservableList<String> getClassConteinersToDisplay(){
         Map<String, ClassTeacher> container = classContainer.getContainer();
         ObservableList<String> keyList = FXCollections.observableArrayList();
 
-        for (String groupName : classContainer.getContainer().keySet()) {
-            keyList.add(groupName);
+        for (ClassTeacher cl : classContainer.getContainer().values()) {
+            keyList.add(cl.getGroupName());
         }
 
         return  keyList;
@@ -441,5 +502,94 @@ public class HelloController {
             textFlowKomunikat.getChildren().clear();
             textFlowKomunikat.getChildren().add(new Text("Error at remove class"));
         }
+    }
+
+    public void handleButtonClickSort(ActionEvent actionEvent) {
+        if(sortTeacherList.getSelectionModel().getSelectedItem().isEmpty()){
+            textFlowKomunikat.getChildren().clear();
+            textFlowKomunikat.getChildren().add(new Text("Select sort by"));
+            return;
+        } else if (ClassList.getSelectionModel().getSelectedItem().isEmpty()) {
+            textFlowKomunikat.getChildren().clear();
+            textFlowKomunikat.getChildren().add(new Text("Select class to be sorted"));
+            return;
+        }
+        List<Teacher> list = new ArrayList<>(classContainer.getContainer().get(ClassList.getSelectionModel().getSelectedItem().toString()).getTeacherList());
+        for (Teacher t: list) {
+            System.out.println(t.toString());
+        }
+        String choice = sortTeacherList.getSelectionModel().getSelectedItem().toString();
+
+        if(choice.equals("Salary")) {
+            list = classContainer.getContainer().get(ClassList.getSelectionModel().getSelectedItem().toString()).sortBySalary();
+            for (Teacher t: list) {
+                System.out.println(t.toString());
+            }
+        }
+        else if (choice.equals("First Name")) {
+            list = classContainer.getContainer().get(ClassList.getSelectionModel().getSelectedItem().toString()).sortByFirstName();
+        }else if (choice.equals("Last Name")) {
+            list = classContainer.getContainer().get(ClassList.getSelectionModel().getSelectedItem().toString()).sortByLastName();
+        }
+        else if (choice.equals("Condition")) {
+            list = classContainer.getContainer().get(ClassList.getSelectionModel().getSelectedItem().toString()).sortByCondition();
+        }
+
+
+        ObservableList<String> keyList = FXCollections.observableArrayList();
+
+            for (Teacher teacher : list) {
+                keyList.add(teacher.getFirstName() + " " + teacher.getLastName());
+            }
+        refresh();
+
+        System.out.println(keyList);
+        TeacherList.setItems(keyList);
+
+    }
+
+    public void handleButtonClickSortClass(ActionEvent actionEvent) {
+        if(sortClassList.getSelectionModel().getSelectedItem().isEmpty()){
+            textFlowKomunikat.getChildren().clear();
+            textFlowKomunikat.getChildren().add(new Text("Select sort by"));
+            return;
+        }
+        String choice = sortClassList.getSelectionModel().getSelectedItem().toString();
+
+        Map<String, ClassTeacher> t = classContainer.getContainer();
+
+        if(choice.equals("Name")) {
+            Map<String, ClassTeacher> sortedMap = t.entrySet()
+                    .stream()
+                    .sorted(Map.Entry.comparingByValue(Comparator.comparing(ClassTeacher::getGroupName)))
+                    .collect(Collectors.toMap(
+                            Map.Entry::getKey,
+                            Map.Entry::getValue,
+                            (e1, e2) -> e1,
+                            LinkedHashMap::new
+                    ));
+
+            // Tworzenie ObservableList dla kluczy
+            ObservableList<String> keyList = FXCollections.observableArrayList(sortedMap.keySet());
+            ClassList.setItems(keyList);
+        }
+
+        else if (choice.equals("Percent")) {
+            Map<String, ClassTeacher> sortedMap = t.entrySet()
+                    .stream()
+                    .sorted(Map.Entry.comparingByValue(Comparator.comparing(ClassTeacher::getPercentFull)))
+                    .collect(Collectors.toMap(
+                            Map.Entry::getKey,
+                            Map.Entry::getValue,
+                            (e1, e2) -> e1,
+                            LinkedHashMap::new
+                    ));
+
+            // Tworzenie ObservableList dla kluczy
+            ObservableList<String> keyList = FXCollections.observableArrayList(sortedMap.keySet());
+            ClassList.setItems(keyList);
+        }
+
+
     }
 }

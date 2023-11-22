@@ -5,52 +5,60 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" prefHeight="507.0" prefWidth="508.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.paoimlab3.HelloController">
+<VBox alignment="CENTER" prefHeight="600.0" prefWidth="508.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.paoimlab3.HelloController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
     <children>
         <AnchorPane prefHeight="600.0" prefWidth="500.0">
             <children>
-                <TextFlow fx:id="textFlowTeacherList" layoutX="245.0" layoutY="15.0" prefHeight="27.0" prefWidth="83.0" />
-                <ListView fx:id="TeacherList" layoutX="245.0" layoutY="50.0" prefHeight="200.0" prefWidth="200.0" />
+                <TextFlow fx:id="textFlowPercent" layoutX="20.0" layoutY="75.0" prefHeight="27.0" prefWidth="65.0" />
 
-                <TextFlow fx:id="textFlowClassList" layoutX="20.0" layoutY="15.0" prefHeight="27.0" prefWidth="83.0" />
-                <ListView fx:id="ClassList" layoutX="20.0" layoutY="50.0" prefHeight="200.0" prefWidth="200.0" />
+                <ListView fx:id="sortTeacherList" layoutX="330.0" layoutY="0.0" prefHeight="100.0" prefWidth="100.0" />
+                <Button fx:id="sortButton" layoutX="245.0" layoutY="30.0" onAction="#handleButtonClickSort" text="Sort" prefWidth="60.0"/>
 
+                <ListView fx:id="sortClassList" layoutX="105.0" layoutY="20.0" prefHeight="50.0" prefWidth="100.0" />
+                <Button fx:id="sortButtonClass" layoutX="20.0" layoutY="30.0" onAction="#handleButtonClickSortClass" text="Sort" prefWidth="60.0"/>
 
-                <TextFlow fx:id="textFlow1" layoutX="20.0" layoutY="280.0" prefHeight="27.0" prefWidth="83.0" />
-                <TextField fx:id="textField1" layoutX="130.0" layoutY="280.0" prefWidth="97.0" />
+                <ListView fx:id="TeacherList" layoutX="245.0" layoutY="110.0" prefHeight="200.0" prefWidth="200.0" />
+                <ListView fx:id="ClassList" layoutX="20.0" layoutY="110.0" prefHeight="200.0" prefWidth="200.0" />
 
-                <TextFlow fx:id="textFlow2" layoutX="20.0" layoutY="320.0" prefHeight="27.0" prefWidth="83.0" />
-                <TextField fx:id="textField2" layoutX="130.0" layoutY="320.0" prefWidth="97.0" />
+                <TextFlow fx:id="textFlow1" layoutX="20.0" layoutY="330.0" prefHeight="27.0" prefWidth="83.0" />
+                <TextField fx:id="textField1" layoutX="130.0" layoutY="330.0" prefWidth="97.0" />
 
-                <TextFlow fx:id="textFlow3" layoutX="20.0" layoutY="360.0" prefHeight="27.0" prefWidth="83.0" />
-                <TextField fx:id="textField3" layoutX="130.0" layoutY="360.0" prefWidth="97.0" />
+                <TextFlow fx:id="textFlow2" layoutX="20.0" layoutY="370.0" prefHeight="27.0" prefWidth="83.0" />
+                <TextField fx:id="textField2" layoutX="130.0" layoutY="370.0" prefWidth="97.0" />
 
-                <TextFlow fx:id="textFlow4" layoutX="20.0" layoutY="400.0" prefHeight="27.0" prefWidth="130.0" />
-                <TextField fx:id="textField4" layoutX="130.0" layoutY="400.0" prefWidth="97.0" />
+                <TextFlow fx:id="textFlow3" layoutX="20.0" layoutY="410.0" prefHeight="27.0" prefWidth="83.0" />
+                <TextField fx:id="textField3" layoutX="130.0" layoutY="410.0" prefWidth="97.0" />
 
-                <TextFlow fx:id="textFlow5" layoutX="20.0" layoutY="440.0" prefHeight="27.0" prefWidth="130.0" />
-                <ListView fx:id="conditionList" layoutX="130.0" layoutY="440.0" prefHeight="100.0" prefWidth="83.0" />
+                <TextFlow fx:id="textFlow4" layoutX="20.0" layoutY="450.0" prefHeight="27.0" prefWidth="130.0" />
+                <TextField fx:id="textField4" layoutX="130.0" layoutY="450.0" prefWidth="97.0" />
 
-                <TextFlow fx:id="textFlowKomunikat" layoutX="20.0" layoutY="580.0" prefHeight="27.0" prefWidth="130.0" />
+                <TextFlow fx:id="textFlow5" layoutX="20.0" layoutY="490.0" prefHeight="27.0" prefWidth="130.0" />
+                <ListView fx:id="conditionList" layoutX="130.0" layoutY="490.0" prefHeight="100.0" prefWidth="83.0" />
 
-                <Button fx:id="addButton" layoutX="20.0" layoutY="550.0" onAction="#handleButtonClickAdd" text="Add" prefWidth="60.0"/>
+                <TextFlow fx:id="textFlowKomunikat" layoutX="20.0" layoutY="630.0" prefHeight="27.0" prefWidth="130.0" />
 
-                <Button fx:id="removeButton" layoutX="100.0" layoutY="550.0" onAction="#handleButtonClickRemove" text="Remove" prefWidth="60.0" />
+                <Button fx:id="addButton" layoutX="20.0" layoutY="600.0" onAction="#handleButtonClickAdd" text="Add" prefWidth="60.0"/>
 
-                <Button fx:id="editButton" layoutX="180.0" layoutY="550.0" onAction="#handleButtonClickEdit" text="Edit" prefWidth="60.0"/>
+                <Button fx:id="removeButton" layoutX="100.0" layoutY="600.0" onAction="#handleButtonClickRemove" text="Remove" prefWidth="60.0" />
 
-                <TextFlow fx:id="textFlowClassInput" layoutX="245.0" layoutY="280.0" prefHeight="27.0" prefWidth="83.0" />
-                <TextField fx:id="textFieldClassInput" layoutX="355.0" layoutY="280.0" prefWidth="97.0" />
+                <Button fx:id="editButton" layoutX="180.0" layoutY="600.0" onAction="#handleButtonClickEdit" text="Edit" prefWidth="60.0"/>
 
-                <TextFlow fx:id="textFlowClassMAX" layoutX="245.0" layoutY="320.0" prefHeight="27.0" prefWidth="83.0" />
-                <TextField fx:id="textFieldClassMAX" layoutX="355.0" layoutY="320.0" prefWidth="97.0" />
+                <TextFlow fx:id="textFlowClassInput" layoutX="245.0" layoutY="330.0" prefHeight="27.0" prefWidth="83.0" />
+                <TextField fx:id="textFieldClassInput" layoutX="355.0" layoutY="330.0" prefWidth="97.0" />
 
-                <Button fx:id="addButtonClass" layoutX="245.0" layoutY="360.0" onAction="#handleButtonClickAddClass" text="Add" prefWidth="60.0"/>
+                <TextFlow fx:id="textFlowClassMAX" layoutX="245.0" layoutY="370.0" prefHeight="27.0" prefWidth="83.0" />
+                <TextField fx:id="textFieldClassMAX" layoutX="355.0" layoutY="370.0" prefWidth="97.0" />
 
-                <Button fx:id="removeButtonClass" layoutX="325.0" layoutY="360.0" onAction="#handleButtonClickRemoveClass" text="Remove selected" prefWidth="129.0" />
+                <Button fx:id="addButtonClass" layoutX="245.0" layoutY="410.0" onAction="#handleButtonClickAddClass" text="Add" prefWidth="60.0"/>
+
+                <Button fx:id="removeButtonClass" layoutX="325.0" layoutY="410.0" onAction="#handleButtonClickRemoveClass" text="Remove selected" prefWidth="129.0" />
+
+                <TextFlow fx:id="textFlowtextfilter" layoutX="245.0" layoutY="450.0" prefHeight="27.0" prefWidth="83.0" />
+                <TextField fx:id="textFieldtextfilter" layoutX="325.0" layoutY="450.0" prefWidth="97.0" />
+
 
             </children>
         </AnchorPane>

@@ -12,7 +12,7 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 540, 640);
+        Scene scene = new Scene(fxmlLoader.load(), 540, 700);
         stage.setTitle("Mateusz Kuzera");
 
       //  LAB2.init(); // inits the values from lab2

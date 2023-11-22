@@ -41,9 +41,8 @@ public class ClassContainer {
         Iterator<Map.Entry<String, ClassTeacher>> iterator = container.entrySet().iterator();
         while(iterator.hasNext()){
             Map.Entry<String, ClassTeacher> entry = iterator.next();
-            Double percentFull = (double) entry.getValue().getTeacherList().size() / entry.getValue().getMaxTeachers().doubleValue() * 100.0;
             s.append(entry.getKey() + " ");
-            s.append(percentFull.toString() + "% Full\n");
+            s.append(entry.getValue().getPercentFullAsString() + "% Full\n");
         }
         return s.toString();
     }

@@ -5,11 +5,13 @@ package com.example.paoimlab3.logic;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class ClassTeacher {
     private String groupName;
     private ArrayList<Teacher> teacherList;
+    private Double percentFull;
 
     public String getGroupName() {
         return groupName;
@@ -25,8 +27,16 @@ public class ClassTeacher {
         this.groupName = groupName;
         this.maxTeachers = maxTeachers;
         teacherList = new ArrayList<>(maxTeachers);
+        percentFull = 0.0;
     }
-
+    public String getPercentFullAsString(){
+        DecimalFormat decimalFormat = new DecimalFormat("##.##");
+        String formattedNumber = decimalFormat.format(percentFull);
+        return formattedNumber;
+    }
+    public Double getPercentFull(){
+        return percentFull;
+    }
 
 
     public ArrayList<Teacher> getTeacherList(){
@@ -46,6 +56,7 @@ public class ClassTeacher {
             }
         }
         teacherList.add(teacher);
+        percentFull = (double)teacherList.size() / (double) maxTeachers * 100.0;
     }
 
     public void addSalary(Teacher teacher, Double salary) throws Exception {
@@ -68,7 +79,9 @@ public class ClassTeacher {
             Teacher teacher1 = iterator.next();
             if(teacher1.equals(teacher)){
                 iterator.remove();
+                percentFull = (double)teacherList.size() / (double) maxTeachers * 100.0;
                 return;
+
             }
         }
 
@@ -141,27 +154,48 @@ public class ClassTeacher {
     }
 
     public List<Teacher> sortByLastName(){
-        ArrayList<Teacher> teachers = teacherList;
-        teachers.sort(new Comparator<Teacher>() {
+        ArrayList<Teacher> teachersCopy = new ArrayList<>(teacherList);
+        teachersCopy.sort(new Comparator<Teacher>() {
             @Override
             public int compare(Teacher o1, Teacher o2) {
                 return o1.getLastName().compareTo(o2.getLastName());
             }
         });
 
-        return teachers;
+        return teachersCopy;
+    }
+    public List<Teacher> sortByCondition(){
+        ArrayList<Teacher> teachersCopy = new ArrayList<>(teacherList);
+        teachersCopy.sort(new Comparator<Teacher>() {
+            @Override
+            public int compare(Teacher o1, Teacher o2) {
+                return o1.getTeacherCondition().compareTo(o2.getTeacherCondition());
+            }
+        });
+        return teachersCopy;
     }
 
+    public List<Teacher> sortByFirstName(){
+        ArrayList<Teacher> teachersCopy = new ArrayList<>(teacherList);
+        teachersCopy.sort(new Comparator<Teacher>() {
+            @Override
+            public int compare(Teacher o1, Teacher o2) {
+                return o1.getFirstName().compareTo(o2.getFirstName());
+            }
+        });
+
+        return teachersCopy;
+    }
     public List<Teacher> sortBySalary(){
-        ArrayList<Teacher> teachers = teacherList;
-        teachers.sort(new Comparator<Teacher>() {
+        ArrayList<Teacher> teachersCopy = new ArrayList<>(teacherList);
+        teachersCopy.sort(new Comparator<Teacher>() {
             @Override
             public int compare(Teacher o1, Teacher o2) {
                 return o1.getSalary().compareTo(o2.getSalary());
             }
         });
 
-        return teachers;
+        return  teachersCopy;
     }
 
     public Double maxSalary(){
